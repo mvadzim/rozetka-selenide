@@ -51,16 +51,20 @@ public class GetGoodsList3Test extends BaseTest {
 
 
         goodsListStep.loadMoreGoodsWithAjax(2);
+
+        // String[][0] - Goods Name
+        // String[][1] - Goods Price
         String[][] goodsNameAndPriceWithPopularityBadge = goodsListPage.goodsNameAndPrice(goodsListPage.goodsBlocksWithPopularityBadge);
+        goodsNameAndPriceWithPopularityBadge = goodsListStep.orderNameAndPriceListByPriceDesc(goodsNameAndPriceWithPopularityBadge);
 
         goodsListStep.loadMoreGoodsWithAjax(2);
         String[][] goodsNameAndPriceWithPriceInterval = goodsListPage.goodsNameAndPrice(goodsListPage.goodsBlocksWithPriceInterval("3000", "6000"));
+        goodsNameAndPriceWithPriceInterval = goodsListStep.orderNameAndPriceListByPriceDesc(goodsNameAndPriceWithPriceInterval);
 
         Excel excel = new Excel();
         String[] sheetsName = {"Популярные смартфоны", "Смартфоны за 3000-6000"};
         String filePath = util.tmpFilePath + "smartphones.xls";
         excel.createSheets(sheetsName);
-        // Todo: Нужно сохранить в порядке убывания цены
         excel.putRows(goodsNameAndPriceWithPopularityBadge, 0);
         excel.putRows(goodsNameAndPriceWithPriceInterval, 1);
         excel.writeExcelFile(filePath);
