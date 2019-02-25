@@ -27,21 +27,14 @@ public class GetGoodsList2Test extends BaseTest {
     @Test
     @DisplayName("Получение списка порошка для стирки от 100 до 300 гривен")
     public void saveProductListToDbTest() {
-        String categoryName = "Товары для дома";
-        String subcategoryName = "Бытовая химия";
-        String sub2CategoryName = "Средства для стирки"; // В ТЗ было "Для стирки"
-        String sub3CategoryName = "Стиральные средства"; // В ТЗ было "Порошки для стирки"
+        String[] categoryNamesForNavigation = {
+                "Товары для дома",
+                "Бытовая химия",
+                "Средства для стирки", // В ТЗ было "Для стирки"
+                "Стиральные средства" // В ТЗ было "Порошки для стирки"
+        };
 
-        I.openUrl(homePage.pageUrl);
-
-        I.click(homePage.linkToCategoryWithName(categoryName));
-        I.canSeeHeadingText(categoryName);
-        I.click(categoryPage.linkToCategoryWithName(subcategoryName));
-        I.canSeeHeadingText(subcategoryName);
-        I.click(categoryPage.linkToCategoryWithName(sub2CategoryName));
-        I.canSeeHeadingText(sub2CategoryName);
-        I.click(goodsListPage.linkToCategoryWithName(sub3CategoryName));
-        I.canSeeHeadingText(sub3CategoryName);
+        I.goFromHomePageToCategory(categoryNamesForNavigation);
 
         goodsListStep.loadMoreGoodsWithAjax(4);
 

@@ -12,8 +12,9 @@ public class HomePage {
      */
     public static String pageUrl = "https://rozetka.com.ua";
 
+    // Локатор используется для тестов не только на главной странице! вынести такие в UniversalPage\BasePage ??
     public static SelenideElement linkToCategoryWithName(String name) {
-        return $$("a.menu-categories__link").filter(matchesText(name)).filter(visible).first();
+        return $$("a.menu-categories__link , a.cat-tree-l-i-link, a.m-cat-l-i-title-link").filter(matchesText(name)).filter(visible).first();
     }
 
 }

@@ -29,28 +29,14 @@ public class GetGoodsList3Test extends BaseTest {
     @DisplayName("Получение смартфонов с признаком Топ продаж, и от 3000 до 6000 грн. ")
     public void sendTopSaleSmartphonesToEmail() {
 
-        // Копипаст с Сценарий 1:
-        // можно было вынести в отдельный общий для двух тестов шаг, или вынести Сценарий 1 и Сценарий 3 в отдельный клас и там копипаст в @before
-        // но я это пока не сделал. Todo: Избавится от повторяющегося кода.
+        String[] categoryNamesForNavigation = {
+                "Смартфоны, ТВ и электроника",
+                "Телефоны",
+                "Смартфоны"
+        };
 
-        // В ТЗ фигурировал раздел "Телефоны, ТВ и электроника", но такого раздела не нашел, взял "Смартфоны, ТВ и электроника".
-        String categoryName = "Смартфоны, ТВ и электроника";
-        String subCategoryName = "Телефоны";
-        String presetName = "Смартфоны";
-
-        I.openUrl(homePage.pageUrl);
-
-        I.click(homePage.linkToCategoryWithName(categoryName));
-        I.canSeeHeadingText(categoryName);
-
-        I.click(categoryPage.linkToCategoryWithName(subCategoryName));
-        I.canSeeHeadingText(subCategoryName);
-
-        I.click(goodsListPage.linkToCategoryWithName(presetName));
-        I.canSeeHeadingText(presetName);
-
+        I.goFromHomePageToCategory(categoryNamesForNavigation);
         I.canSeeElement(goodsListPage.goodsNameLinks.first());
-
 
         goodsListStep.loadMoreGoodsWithAjax(2);
 

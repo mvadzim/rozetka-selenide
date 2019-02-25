@@ -9,6 +9,7 @@ import io.qameta.allure.Step;
 
 public class BaseStep {
     private static com.github.mvadzim.rozetka.selenide.utils.Util util;
+    private static com.github.mvadzim.rozetka.selenide.pages.HomePage homePage;
 
     @Step("Открываю страницу \"{url}\"")
     public static void openUrl(String url) {
@@ -47,5 +48,13 @@ public class BaseStep {
         util.sendFileToEmails(filePath);
         String mailList = util.getConfigPoperty("mail.to");
         return mailList;
+    }
+    @Step("Перехожу с главной страницы по катагориям: {categoryNamesForNavigation}")
+    public static void goFromHomePageToCategory(String[] categoryNamesForNavigation){
+        openUrl(homePage.pageUrl);
+        for (String categoryName : categoryNamesForNavigation) {
+            click(homePage.linkToCategoryWithName(categoryName));
+            canSeeHeadingText(categoryName);
+        }
     }
 }

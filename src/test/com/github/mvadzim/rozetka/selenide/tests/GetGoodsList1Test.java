@@ -1,6 +1,11 @@
 package com.github.mvadzim.rozetka.selenide.tests;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 import java.util.List;
 
@@ -14,6 +19,7 @@ import io.qameta.allure.junit4.DisplayName;
  */
 
 @DisplayName("Просмотр товаров на сайте розетки")
+@RunWith(DataProviderRunner.class)
 public class GetGoodsList1Test extends BaseTest {
 
     private static com.github.mvadzim.rozetka.selenide.utils.Util util;
@@ -22,6 +28,14 @@ public class GetGoodsList1Test extends BaseTest {
     private static com.github.mvadzim.rozetka.selenide.pages.HomePage homePage;
     private static com.github.mvadzim.rozetka.selenide.pages.CategoryPage categoryPage;
     private static com.github.mvadzim.rozetka.selenide.pages.GoodsListPage goodsListPage;
+
+    @DataProvider
+    public static Object[][] breadcrumbsCategoryNameDataProvider() {
+        return new Object[][]{
+                {"Смартфоны, ТВ и электроника", "Телефоны", "Смартфоны"},        // В ТЗ фигурировал раздел "Телефоны, ТВ и электроника", но такого раздела не нашел, взял "Смартфоны, ТВ и электроника".
+                {"Товары для дома", "Бытовая химия", "Средства для стирки", "Стиральные средства"}, // В ТЗ не было, самодеятельность для тестирования датапровайдера
+        };
+    }
 
     @Test
     @DisplayName("Получение списка смартфонов на первых трех страницах выдачи категории")
@@ -35,23 +49,11 @@ public class GetGoodsList1Test extends BaseTest {
             "- записать полученные результаты в текстовый файл<br/>" +
             "- отправить данный файл по списку рассылки (e-mails из отдельного файла)<br/>" +
             "")
+    @UseDataProvider("breadcrumbsCategoryNameDataProvider")
+    public void smartphonesListTest(String... categoryNamesForNavigation) {
 
-    public void smartphonesListTest() {
-        // В ТЗ фигурировал раздел "Телефоны, ТВ и электроника", но такого раздела не нашел, взял "Смартфоны, ТВ и электроника".
-        // Todo: Попробовать для интереса https://github.com/TNG/junit-dataprovider
-        String categoryName = "Смартфоны, ТВ и электроника";
-        String subCategoryName = "Телефоны";
-        String presetName = "Смартфоны";
+        I.goFromHomePageToCategory(categoryNamesForNavigation);
 
-        I.openUrl(homePage.pageUrl); // // Алиас open(homePage.pageUrl)
-        I.click(homePage.linkToCategoryWithName(categoryName)); // Алиас $(homePage.linkToCategoryWithName(categoryName)).click();
-        I.canSeeHeadingText(categoryName);
-
-        I.click(categoryPage.linkToCategoryWithName(subCategoryName));
-        I.canSeeHeadingText(subCategoryName);
-
-        I.click(goodsListPage.linkToCategoryWithName(presetName));
-        I.canSeeHeadingText(presetName);
         I.comment("Хочу убедится что на странице есть хоть один товар");
         I.canSeeElement(goodsListPage.goodsNameLinks.first());
 
