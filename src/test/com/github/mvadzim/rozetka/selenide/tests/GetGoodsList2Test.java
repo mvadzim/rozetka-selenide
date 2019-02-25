@@ -1,17 +1,18 @@
 package com.github.mvadzim.rozetka.selenide.tests;
 
-import com.github.mvadzim.rozetka.selenide.utils.Db;
 import org.junit.Test;
-
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-
-import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
+import com.github.mvadzim.rozetka.selenide.utils.Db;
 
 @DisplayName("Просмотр товаров на сайте розетки")
 public class GetGoodsList2Test extends BaseTest {
+
+    private static com.github.mvadzim.rozetka.selenide.steps.BaseStep I;
+    private static com.github.mvadzim.rozetka.selenide.steps.GoodsListStep goodsListStep;
+    private static com.github.mvadzim.rozetka.selenide.pages.HomePage homePage;
+    private static com.github.mvadzim.rozetka.selenide.pages.CategoryPage categoryPage;
+    private static com.github.mvadzim.rozetka.selenide.pages.GoodsListPage goodsListPage;
+
     /*
     Сценарий 2:
         - развернуть локально БД, например MySQL
@@ -31,16 +32,16 @@ public class GetGoodsList2Test extends BaseTest {
         String sub2CategoryName = "Средства для стирки"; // В ТЗ было "Для стирки"
         String sub3CategoryName = "Стиральные средства"; // В ТЗ было "Порошки для стирки"
 
-        open(homePage.pageUrl);
+        I.openUrl(homePage.pageUrl);
 
-        $(homePage.linkToCategoryWithName(categoryName)).click();
-        step.canSeeHeadingText(categoryName);
-        $(categoryPage.linkToCategoryWithName(subcategoryName)).click();
-        step.canSeeHeadingText(subcategoryName);
-        $(categoryPage.linkToCategoryWithName(sub2CategoryName)).click();
-        step.canSeeHeadingText(sub2CategoryName);
-        $(goodsListPage.linkToCategoryWithName(sub3CategoryName)).click();
-        step.canSeeHeadingText(sub3CategoryName);
+        I.click(homePage.linkToCategoryWithName(categoryName));
+        I.canSeeHeadingText(categoryName);
+        I.click(categoryPage.linkToCategoryWithName(subcategoryName));
+        I.canSeeHeadingText(subcategoryName);
+        I.click(categoryPage.linkToCategoryWithName(sub2CategoryName));
+        I.canSeeHeadingText(sub2CategoryName);
+        I.click(goodsListPage.linkToCategoryWithName(sub3CategoryName));
+        I.canSeeHeadingText(sub3CategoryName);
 
         goodsListStep.loadMoreGoodsWithAjax(4);
 

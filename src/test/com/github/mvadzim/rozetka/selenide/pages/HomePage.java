@@ -10,9 +10,9 @@ public class HomePage {
      * Example:
      * https://rozetka.com.ua/
      */
-    public String pageUrl = "https://rozetka.com.ua";
+    public static String pageUrl = "https://rozetka.com.ua";
 
-    public SelenideElement linkToCategoryWithName(String name) {
+    public static SelenideElement linkToCategoryWithName(String name) {
         return $$("a.menu-categories__link").filter(matchesText(name)).filter(visible).first();
     }
 

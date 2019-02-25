@@ -1,16 +1,18 @@
 package com.github.mvadzim.rozetka.selenide.tests;
 
-import com.github.mvadzim.rozetka.selenide.utils.Excel;
 import org.junit.Test;
-
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
+import com.github.mvadzim.rozetka.selenide.utils.Excel;
 
 @DisplayName("Просмотр товаров на сайте розетки")
 public class GetGoodsList3Test extends BaseTest {
+
+    private static com.github.mvadzim.rozetka.selenide.utils.Util util;
+    private static com.github.mvadzim.rozetka.selenide.steps.BaseStep I;
+    private static com.github.mvadzim.rozetka.selenide.steps.GoodsListStep goodsListStep;
+    private static com.github.mvadzim.rozetka.selenide.pages.HomePage homePage;
+    private static com.github.mvadzim.rozetka.selenide.pages.CategoryPage categoryPage;
+    private static com.github.mvadzim.rozetka.selenide.pages.GoodsListPage goodsListPage;
 
     /*
     Сценарий 3:
@@ -36,18 +38,18 @@ public class GetGoodsList3Test extends BaseTest {
         String subCategoryName = "Телефоны";
         String presetName = "Смартфоны";
 
-        open(homePage.pageUrl);
+        I.openUrl(homePage.pageUrl);
 
-        $(homePage.linkToCategoryWithName(categoryName)).click();
-        step.canSeeHeadingText(categoryName);
+        I.click(homePage.linkToCategoryWithName(categoryName));
+        I.canSeeHeadingText(categoryName);
 
-        $(categoryPage.linkToCategoryWithName(subCategoryName)).click();
-        step.canSeeHeadingText(subCategoryName);
+        I.click(categoryPage.linkToCategoryWithName(subCategoryName));
+        I.canSeeHeadingText(subCategoryName);
 
-        $(goodsListPage.linkToCategoryWithName(presetName)).click();
-        step.canSeeHeadingText(presetName);
+        I.click(goodsListPage.linkToCategoryWithName(presetName));
+        I.canSeeHeadingText(presetName);
 
-        step.canSeeElement(goodsListPage.goodsNameLinks.first());
+        I.canSeeElement(goodsListPage.goodsNameLinks.first());
 
 
         goodsListStep.loadMoreGoodsWithAjax(2);
@@ -61,9 +63,9 @@ public class GetGoodsList3Test extends BaseTest {
         String[][] goodsNameAndPriceWithPriceInterval = goodsListPage.goodsNameAndPrice(goodsListPage.goodsBlocksWithPriceInterval("3000", "6000"));
         goodsNameAndPriceWithPriceInterval = goodsListStep.orderNameAndPriceListByPriceDesc(goodsNameAndPriceWithPriceInterval);
 
-        Excel excel = new Excel();
         String[] sheetsName = {"Популярные смартфоны", "Смартфоны за 3000-6000"};
         String filePath = util.tmpFilePath + "smartphones.xls";
+        Excel excel = new Excel();
         excel.createSheets(sheetsName);
         excel.putRows(goodsNameAndPriceWithPopularityBadge, 0);
         excel.putRows(goodsNameAndPriceWithPriceInterval, 1);

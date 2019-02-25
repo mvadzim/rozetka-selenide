@@ -1,6 +1,7 @@
 package com.github.mvadzim.rozetka.selenide.utils;
 
 import java.io.*;
+import java.util.Arrays;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -18,6 +19,7 @@ public class Excel {
             fileOut.close();
             workbook.close();
         } catch (Exception ex) {
+            System.err.println("SQLException\n" + Arrays.toString(ex.getStackTrace()));
         }
     }
 

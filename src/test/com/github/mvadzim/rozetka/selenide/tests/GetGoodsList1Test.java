@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
+
 
 /**
  * Этот тест написан в стиле https://codeception.com/ и с упором на удобный для восприятия отчет в Allure
@@ -15,6 +15,13 @@ import io.qameta.allure.junit4.DisplayName;
 
 @DisplayName("Просмотр товаров на сайте розетки")
 public class GetGoodsList1Test extends BaseTest {
+
+    private static com.github.mvadzim.rozetka.selenide.utils.Util util;
+    private static com.github.mvadzim.rozetka.selenide.steps.BaseStep I;
+    private static com.github.mvadzim.rozetka.selenide.steps.GoodsListStep goodsListStep;
+    private static com.github.mvadzim.rozetka.selenide.pages.HomePage homePage;
+    private static com.github.mvadzim.rozetka.selenide.pages.CategoryPage categoryPage;
+    private static com.github.mvadzim.rozetka.selenide.pages.GoodsListPage goodsListPage;
 
     @Test
     @DisplayName("Получение списка смартфонов на первых трех страницах выдачи категории")
@@ -56,6 +63,6 @@ public class GetGoodsList1Test extends BaseTest {
 
         I.writeTextFile(filePath, StringUtils.join(goodsName, "\n"));
         I.sendFileToEmails(filePath);
+
     }
 }
-

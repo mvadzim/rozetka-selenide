@@ -20,10 +20,10 @@ import javax.mail.internet.MimeMultipart;
 
 
 public class Util {
-    private final String configPopertiesPath = "./src/test/resources/config.properties";
-    public final String tmpFilePath = getConfigPoperty("report.tmpfile.path");
+    private static final String configPopertiesPath = "./src/test/resources/config.properties";
+    public static final String tmpFilePath = getConfigPoperty("report.tmpfile.path");
 
-    public void writeTextFile(String filePath, String text) {
+    public static void writeTextFile(String filePath, String text) {
         Writer writer = null;
         try {
             writer = new BufferedWriter(new OutputStreamWriter(
@@ -40,11 +40,11 @@ public class Util {
         }
     }
 
-    public String getConfigPoperty(String propertyName) {
+    public static String getConfigPoperty(String propertyName) {
         return getProperty(propertyName, configPopertiesPath);
     }
 
-    public String getProperty(String propertyName, String propertyFilePath) {
+    public static String getProperty(String propertyName, String propertyFilePath) {
 
         Properties prop = new Properties();
         InputStreamReader is = null;
@@ -70,7 +70,7 @@ public class Util {
     }
 
 
-    public void sendFileToEmails(String filePath) {
+    public static void sendFileToEmails(String filePath) {
 
         String to = getConfigPoperty("mail.to");
         String from = getConfigPoperty("mail.from");
